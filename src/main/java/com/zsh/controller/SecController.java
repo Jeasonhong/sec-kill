@@ -1,6 +1,8 @@
 package com.zsh.controller;
 
 import com.zsh.service.SecService;
+import org.springframework.boot.SpringBootVersion;
+import org.springframework.core.SpringVersion;
 import org.springframework.web.bind.annotation.*;
 
 import javax.annotation.Resource;
@@ -8,7 +10,7 @@ import javax.annotation.Resource;
 /**
  * <h1>秒杀控制器</h1>
  *
- * @author <a href="mailto::jeasonhong@dingtalk.com">张顺鸿</a>
+ * @author <a href="jeasonhong@gmail.com">jeasonhong</a>
  * @version 1.0.0
  * @since 2022-03-01
  */
@@ -52,6 +54,8 @@ public class SecController {
      */
     @GetMapping("reset")
     public String resetCache(@RequestParam("goodsId") Integer goodsId,@RequestParam("stock") Integer stock){
+        String version= SpringBootVersion.getVersion();
+        System.out.println(version);
         return secService.resetCache(goodsId,stock);
     }
 

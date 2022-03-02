@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsh.dao.mapper.SecOrderMapper">
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sec-demo.sec_order(user_id, order_id, goods_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.orderId}, #{entity.goodsId})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sec-demo.sec_order(user_id, order_id, goods_id)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.userId}, #{entity.orderId}, #{entity.goodsId})
+        </foreach>
+        on duplicate key update
+        user_id = values(user_id) , order_id = values(order_id) , goods_id = values(goods_id)
+    </insert>
+
+</mapper>
+

@@ -3,7 +3,7 @@ package com.zsh.service;
 /**
  * <h1>秒杀服务接口</h1>
  *
- * @author <a href="mailto::jeasonhong@dingtalk.com">张顺鸿</a>
+ * @author <a href="jeasonhong@gmail.com">jeasonhong</a>
  * @version 1.0.0
  * @since 2022-03-01
  */

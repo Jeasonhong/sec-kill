@@ -24,7 +24,7 @@ import java.time.LocalDateTime;
  * 服务降级熔断
  * 抢购完后直接返回抢购结束/抢购完成
  *
- * @author <a href="mailto::jeasonhong@dingtalk.com">张顺鸿</a>
+ * @author <a href="jeasonhong@gmail.com">jeasonhong</a>
  * @version 1.0.0
  * @since 2022-03-01
  */
@@ -37,6 +37,20 @@ public class SecServiceImpl implements SecService {
     @Resource
     private RedisTemplate<String,String> redisTemplate;
 
+    /**
+     * 库存redis键值
+     */
+    private final static String SEC_GOODS_STOCK="sec:goods:stock";
+
+    /**
+     * 抢购启用键(启用:true,禁用:false)
+     */
+    private final static String OPEN_KILL="sec:open_kill";
+
+    /**
+     * 抢购人员集合
+     */
+    private final static String KILLER_HASH="sec:killer:hash";
 
     /**
      * md5 加盐
@@ -70,38 +84,6 @@ public class SecServiceImpl implements SecService {
         return DigestUtils.md5DigestAsHex(base.getBytes());
     }
 
-
-
-//    @Override
-//    public String killGoods(int goodsId) {
-//        log.info("抢购开始");
-//        SecGoods secGoods = secGoodsService.getById(goodsId);
-//        Integer stock = secGoods.getStock();
-//        if (stock>0){
-//            secGoods.setStock(stock-1);
-//        }else{
-//            return "抢购失败";
-//        }
-//        try{
-//            updateStock(secGoods);
-//        }catch (Exception e){
-//            return "更新库存失败!";
-//        }
-//        log.info("抢购结束");
-//        return "抢购成功";
-//    }
-
-    private final static String SEC_GOODS_STOCK="sec:goods:stock";
-
-    /**
-     * 抢购启用键(启用:true,禁用:false)
-     */
-    private final static String OPEN_KILL="sec:open_kill";
-
-    /**
-     * 抢购人员集合
-     */
-    private final static String KILLER_HASH="sec:killer:hash";
 
     @Override
     public String killGoods(Integer goodsId, String phone) {
