@@ -1,0 +1,28 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="com.zsh.dao.mapper.SecGoodsMapper">
+
+    <!-- 批量插入 -->
+    <insert id="insertBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sec-demo.sec_goods(goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.goodsName}, #{entity.goodsTitle}, #{entity.goodsImg}, #{entity.goodsDetail}, #{entity.goodsPrice},
+            #{entity.goodsStock})
+        </foreach>
+    </insert>
+    <!-- 批量插入或按主键更新 -->
+    <insert id="insertOrUpdateBatch" keyProperty="id" useGeneratedKeys="true">
+        insert into sec-demo.sec_goods(goods_name, goods_title, goods_img, goods_detail, goods_price, goods_stock)
+        values
+        <foreach collection="entities" item="entity" separator=",">
+            (#{entity.goodsName}, #{entity.goodsTitle}, #{entity.goodsImg}, #{entity.goodsDetail}, #{entity.goodsPrice},
+            #{entity.goodsStock})
+        </foreach>
+        on duplicate key update
+        goods_name = values(goods_name) , goods_title = values(goods_title) , goods_img = values(goods_img) ,
+        goods_detail = values(goods_detail) , goods_price = values(goods_price) , goods_stock = values(goods_stock)
+    </insert>
+
+</mapper>
+
